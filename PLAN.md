@@ -24,7 +24,7 @@ This document defines the technical design for the system specified in `SPEC.md`
 | Server state & sync | TanStack Query |
 | Routing | React Router |
 | Date handling | date-fns |
-| i18n / Hebrew | react-i18next + MUI RTL theme |
+| Hebrew text & RTL | Inline Hebrew strings + MUI RTL theme (no i18n library — see §10, OT-4) |
 | Testing | Vitest + React Testing Library |
 | Hosting | Netlify |
 
@@ -136,7 +136,6 @@ src/
   data/          # Supabase client, TanStack Query hooks
   features/      # auth, dashboard, calendar, history, settings
   theme/         # MUI theme (RTL, palette, typography)
-  i18n/          # Hebrew strings
   App.tsx  main.tsx
 ```
 
@@ -156,7 +155,7 @@ src/
 
 - **Browser compatibility:** supported on all modern browsers — Chrome, Edge, Firefox, Safari. No installation required (opens via a link).
 - **Offline (EC-14):** cached data is shown with an offline indicator; edits are blocked while offline. Offline editing/sync is out of MVP.
-- **RTL/Hebrew (§4.14):** MUI theme `direction: 'rtl'` with `stylis-plugin-rtl`; all strings via the i18n Hebrew file.
+- **RTL/Hebrew (§4.14):** MUI theme `direction: 'rtl'` with `stylis-plugin-rtl`; Hebrew strings written inline in the components (no i18n library — see §10, OT-4).
 - **Design:** built on MUI theming (palette, typography, spacing), finalized during implementation.
 
 ---
@@ -186,6 +185,7 @@ src/
 - **OT-1** — Calendar UI: a ready-made calendar component (react-big-calendar), MUI-styled.
 - **OT-2** — Hosting: Netlify.
 - **OT-3** — Phase 1 MVP cut (§9) confirmed.
+- **OT-4** (2026-06-21) — No i18n library. Hebrew UI text is written inline in the components; `react-i18next` is dropped. Rationale: Hebrew-only MVP, single developer — inline text is clearer to read and maintain. The RTL/Hebrew requirement (§4.14) is still met via the MUI RTL theme + `stylis-plugin-rtl`. Revisit only if multilingual support is requested.
 
 ---
 

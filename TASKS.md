@@ -18,7 +18,7 @@ Each task is small and independently verifiable, with the seven required section
 | # | Task | Deps | Status |
 |---|---|---|---|
 | TASK-001 | Project scaffold (Vite + React + TS + Vitest) | — | Done |
-| TASK-002 | MUI RTL theme + Hebrew i18n base | 001 | Not started |
+| TASK-002 | MUI RTL theme (Hebrew text inline) | 001 | Not started |
 | TASK-003 | Supabase project: schema + RLS | — | Not started |
 | TASK-004 | Supabase client + authentication | 001, 003 | Not started |
 | TASK-005 | Auth guard + app routing/layout | 002, 004 | Not started |
@@ -46,15 +46,15 @@ Each task is small and independently verifiable, with the seven required section
 - **Deps:** —
 - **Out of scope:** Any feature code, styling, backend.
 
-## TASK-002 — MUI RTL theme + Hebrew i18n base
-- **Goal:** Configure MUI with an RTL theme and a Hebrew i18n setup.
-- **Context:** SPEC §4.14; PLAN §1, §7.
+## TASK-002 — MUI RTL theme (Hebrew text inline)
+- **Goal:** Configure MUI with an RTL theme. Hebrew UI text is written directly in components — no i18n library.
+- **Context:** SPEC §4.14; PLAN §1, §7. **Decision (2026-06-21):** dropped `react-i18next` (planned in PLAN/SPEC) for the MVP — Hebrew-only, single developer; inline text is clearer. Revisit only if multilingual support is needed.
 - **In:** App root from TASK-001.
-- **Out:** App renders right-to-left in Hebrew; MUI theme (palette, typography) and `react-i18next` wired with a Hebrew strings file.
-- **Edge:** Styles not mirrored (missing `stylis-plugin-rtl`); untranslated string fallback.
-- **DoD:** A sample MUI screen renders RTL with Hebrew text pulled from the i18n file.
+- **Out:** App renders right-to-left in Hebrew; MUI theme (palette, typography) with `stylis-plugin-rtl` for mirrored styles; Hebrew strings written inline in JSX.
+- **Edge:** Styles not mirrored (missing `stylis-plugin-rtl`).
+- **DoD:** A sample MUI screen renders RTL with Hebrew text.
 - **Deps:** TASK-001.
-- **Out of scope:** Actual app screens; multilingual support (Hebrew only).
+- **Out of scope:** i18n / multilingual support (Hebrew only, inline); actual app screens.
 
 ## TASK-003 — Supabase project: schema + RLS
 - **Goal:** Create the Supabase project and the three tables with Row-Level Security.
