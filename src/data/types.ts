@@ -1,5 +1,40 @@
 // Database row shapes (mirror supabase/schema.sql).
 
+export type DayType =
+  | 'working'
+  | 'weekend'
+  | 'holiday'
+  | 'vacation_full'
+  | 'vacation_half'
+
+export type EntryMethod = 'range' | 'direct' | 'none'
+
+export type DayRecord = {
+  id: string
+  user_id: string
+  date: string // 'YYYY-MM-DD'
+  day_type: DayType
+  entry_method: EntryMethod
+  start_time: string | null
+  end_time: string | null
+  direct_hours: number | null
+  break_overage: number
+  net_hours: number
+  created_at: string
+}
+
+// Fields a caller provides when saving a day (id/user_id/created_at are managed).
+export type DayRecordInput = {
+  date: string
+  day_type: DayType
+  entry_method: EntryMethod
+  start_time?: string | null
+  end_time?: string | null
+  direct_hours?: number | null
+  break_overage?: number
+  net_hours: number
+}
+
 export type Month = {
   id: string
   user_id: string
