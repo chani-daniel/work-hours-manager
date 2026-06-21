@@ -27,7 +27,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-007 | Domain: `computeNetHours` | 001 | Done |
 | TASK-008 | Domain: `countWorkingDays` + `computeSDH` | 001 | Done |
 | TASK-009 | Domain: `computeAdjustedTarget` | 008 | Done |
-| TASK-010 | Domain: `computeProgress` | 007, 009 | Not started |
+| TASK-010 | Domain: `computeProgress` | 007, 009 | Done |
 | TASK-011 | Monthly target screen | 005, 006a | Not started |
 | TASK-012a | Calendar month view | 005, 006b | Not started |
 | TASK-012b | Day entry editor | 012a, 006b, 007 | Not started |
