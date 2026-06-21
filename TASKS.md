@@ -19,7 +19,7 @@ Each task is small and independently verifiable, with the seven required section
 |---|---|---|---|
 | TASK-001 | Project scaffold (Vite + React + TS + Vitest) | — | Done |
 | TASK-002 | MUI RTL theme (Hebrew text inline) | 001 | Done |
-| TASK-003 | Supabase project: schema + RLS | — | Not started |
+| TASK-003 | Supabase project: schema + RLS | — | Done |
 | TASK-004 | Supabase client + authentication | 001, 003 | Not started |
 | TASK-005 | Auth guard + app routing/layout | 002, 004 | Not started |
 | TASK-006a | Data hooks: months + settings | 003, 004 | Not started |
