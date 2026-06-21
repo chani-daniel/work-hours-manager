@@ -26,7 +26,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-006b | Data hooks: day_records | 003, 004 | Done |
 | TASK-007 | Domain: `computeNetHours` | 001 | Done |
 | TASK-008 | Domain: `countWorkingDays` + `computeSDH` | 001 | Done |
-| TASK-009 | Domain: `computeAdjustedTarget` | 008 | Not started |
+| TASK-009 | Domain: `computeAdjustedTarget` | 008 | Done |
 | TASK-010 | Domain: `computeProgress` | 007, 009 | Not started |
 | TASK-011 | Monthly target screen | 005, 006a | Not started |
 | TASK-012a | Calendar month view | 005, 006b | Not started |
@@ -130,7 +130,7 @@ Each task is small and independently verifiable, with the seven required section
 ## TASK-009 — Domain: `computeAdjustedTarget`
 - **Goal:** Reduce the monthly target for holidays and vacations.
 - **Context:** SPEC §4.5 (factors), §4.2, FR-2.5, EC-11.
-- **In:** SDH; the month's day records (with day types).
+- **In:** monthly target; SDH; the month's day records (with day types). *(PLAN's abbreviated signature omitted `monthlyTarget`, which FR-5.2 requires — added.)*
 - **Out:** Adjusted target.
 - **Edge:** Half vacation = 0.5 (EC-11); holiday/vacation on weekend = factor 0 (FR-2.5).
 - **DoD:** Pure function with Vitest tests covering full/half time off and weekend cases — all pass.
