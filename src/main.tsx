@@ -5,12 +5,15 @@ import '@fontsource/heebo/400.css'
 import '@fontsource/heebo/500.css'
 import '@fontsource/heebo/700.css'
 import { AppThemeProvider } from './theme/AppThemeProvider.tsx'
+import { AuthProvider } from './features/auth/AuthProvider.tsx'
 import App from './App.tsx'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <AppThemeProvider>
-      <App />
+      <AuthProvider>
+        <App />
+      </AuthProvider>
     </AppThemeProvider>
   </StrictMode>,
 )

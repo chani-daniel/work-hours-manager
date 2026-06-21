@@ -1,28 +1,49 @@
 import { render, screen } from '@testing-library/react'
-import { describe, it, expect } from 'vitest'
+import { describe, it, expect, vi } from 'vitest'
+
+// Mock the Supabase client so tests never hit the network.
+// getSession resolves to "no session", so the app shows the sign-in screen.
+vi.mock('./data/supabaseClient', () => ({
+  supabase: {
+    auth: {
+      getSession: vi.fn().mockResolvedValue({ data: { session: null } }),
+      onAuthStateChange: vi.fn().mockReturnValue({
+        data: { subscription: { unsubscribe: vi.fn() } },
+      }),
+      signInWithPassword: vi.fn(),
+      signUp: vi.fn(),
+      signInWithOAuth: vi.fn(),
+      signOut: vi.fn(),
+    },
+  },
+}))
+
 import { AppThemeProvider } from './theme/AppThemeProvider'
+import { AuthProvider } from './features/auth/AuthProvider'
 import App from './App'
 
-describe('App', () => {
-  it('renders the Hebrew app title within the theme provider', () => {
-    render(
-      <AppThemeProvider>
+function renderApp() {
+  return render(
+    <AppThemeProvider>
+      <AuthProvider>
         <App />
-      </AppThemeProvider>,
-    )
+      </AuthProvider>
+    </AppThemeProvider>,
+  )
+}
+
+describe('App (signed out)', () => {
+  it('shows the Hebrew sign-in screen once loading resolves', async () => {
+    renderApp()
     expect(
-      screen.getByRole('heading', { name: 'ניהול שעות עבודה' }),
+      await screen.findByRole('heading', { name: 'התחברות' }),
     ).toBeInTheDocument()
   })
 
-  it('renders a sample MUI button with inline Hebrew text', () => {
-    render(
-      <AppThemeProvider>
-        <App />
-      </AppThemeProvider>,
-    )
-    expect(
-      screen.getByRole('button', { name: 'שמירת יעד' }),
-    ).toBeInTheDocument()
+  it('renders email and password fields', async () => {
+    renderApp()
+    // Required fields render with a trailing "*", so match loosely.
+    expect(await screen.findByLabelText(/אימייל/)).toBeInTheDocument()
+    expect(screen.getByLabelText(/סיסמה/)).toBeInTheDocument()
   })
 })
