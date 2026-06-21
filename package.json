@@ -19,6 +19,7 @@
     "@supabase/supabase-js": "^2.108.2",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-router-dom": "^7.18.0",
     "stylis": "^4.4.0",
     "stylis-plugin-rtl": "^2.1.1"
   },

@@ -1,69 +1,18 @@
-import { useState } from 'react'
-import {
-  Box,
-  Button,
-  Card,
-  CardContent,
-  CircularProgress,
-  Container,
-  Stack,
-  Typography,
-} from '@mui/material'
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
+import { Box, CircularProgress } from '@mui/material'
 import { useAuth } from './features/auth/AuthProvider'
 import { AuthScreen } from './features/auth/AuthScreen'
-
-// Signed-in placeholder view. Real screens arrive in later tasks (TASK-011 onward).
-function SignedInView() {
-  const { user, signOut } = useAuth()
-  const [signingOut, setSigningOut] = useState(false)
-
-  const handleSignOut = async () => {
-    setSigningOut(true)
-    try {
-      await signOut()
-    } finally {
-      setSigningOut(false)
-    }
-  }
-
-  return (
-    <Box sx={{ minHeight: '100vh', py: 6 }}>
-      <Container maxWidth="sm">
-        <Stack spacing={3}>
-          <Stack
-            direction="row"
-            sx={{ justifyContent: 'space-between', alignItems: 'center' }}
-          >
-            <Typography variant="h4" component="h1" sx={{ fontWeight: 700 }}>
-              ניהול שעות עבודה
-            </Typography>
-            <Button variant="outlined" onClick={handleSignOut} disabled={signingOut}>
-              התנתקות
-            </Button>
-          </Stack>
-
-          <Card elevation={2}>
-            <CardContent>
-              <Stack spacing={1}>
-                <Typography variant="h6" component="h2">
-                  שלום 👋
-                </Typography>
-                <Typography variant="body2" color="text.secondary">
-                  את מחוברת כעת כ־{user?.email}. המסכים של האפליקציה יתווספו במשימות
-                  הבאות.
-                </Typography>
-              </Stack>
-            </CardContent>
-          </Card>
-        </Stack>
-      </Container>
-    </Box>
-  )
-}
+import { ProtectedRoute } from './routes/ProtectedRoute'
+import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
+import { AppLayout } from './features/layout/AppLayout'
+import { DashboardPage } from './features/dashboard/DashboardPage'
+import { CalendarPage } from './features/calendar/CalendarPage'
 
 function App() {
-  const { loading, session } = useAuth()
+  const { loading } = useAuth()
 
+  // Wait until the initial session check finishes before deciding what to show,
+  // so a signed-in user is not briefly bounced to the sign-in screen on refresh.
   if (loading) {
     return (
       <Box sx={{ minHeight: '100vh', display: 'grid', placeItems: 'center' }}>
@@ -72,7 +21,28 @@ function App() {
     )
   }
 
-  return session ? <SignedInView /> : <AuthScreen />
+  return (
+    <BrowserRouter>
+      <Routes>
+        {/* Public auth screens — redirected away once signed in. */}
+        <Route element={<PublicOnlyRoute />}>
+          <Route path="/signin" element={<AuthScreen mode="signin" />} />
+          <Route path="/signup" element={<AuthScreen mode="signup" />} />
+        </Route>
+
+        {/* Protected app — requires a session, wrapped in the shared layout. */}
+        <Route element={<ProtectedRoute />}>
+          <Route element={<AppLayout />}>
+            <Route path="/" element={<DashboardPage />} />
+            <Route path="/calendar" element={<CalendarPage />} />
+          </Route>
+        </Route>
+
+        {/* Unknown paths fall back to the dashboard (or sign-in if signed out). */}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App

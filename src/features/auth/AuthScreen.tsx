@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import type { FormEvent } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import {
   Alert,
   Box,
@@ -16,9 +17,8 @@ import { hebrewAuthError } from './authErrors'
 
 type Mode = 'signin' | 'signup'
 
-export function AuthScreen() {
+export function AuthScreen({ mode }: { mode: Mode }) {
   const { signIn, signUp } = useAuth()
-  const [mode, setMode] = useState<Mode>('signin')
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [submitting, setSubmitting] = useState(false)
@@ -26,12 +26,6 @@ export function AuthScreen() {
   const [info, setInfo] = useState<string | null>(null)
 
   const isSignup = mode === 'signup'
-
-  const toggleMode = () => {
-    setMode(isSignup ? 'signin' : 'signup')
-    setError(null)
-    setInfo(null)
-  }
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault()
@@ -44,8 +38,10 @@ export function AuthScreen() {
         if (needsConfirmation) {
           setInfo('נשלח אליך מייל לאימות הכתובת. יש לאשר אותו ואז להתחבר.')
         }
+        // If no confirmation is needed, the new session triggers a redirect.
       } else {
         await signIn(email, password)
+        // On success the session updates and PublicOnlyRoute redirects to "/".
       }
     } catch (err) {
       const message = err instanceof Error ? err.message : String(err)
@@ -92,7 +88,7 @@ export function AuthScreen() {
 
             <Typography variant="body2" sx={{ textAlign: 'center' }}>
               {isSignup ? 'כבר יש לך חשבון? ' : 'אין לך חשבון עדיין? '}
-              <Link component="button" type="button" onClick={toggleMode}>
+              <Link component={RouterLink} to={isSignup ? '/signin' : '/signup'}>
                 {isSignup ? 'להתחברות' : 'להרשמה'}
               </Link>
             </Typography>
