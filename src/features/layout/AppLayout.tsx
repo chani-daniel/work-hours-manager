@@ -32,6 +32,9 @@ export function AppLayout() {
             <Button color="inherit" component={RouterLink} to="/">
               דשבורד
             </Button>
+            <Button color="inherit" component={RouterLink} to="/target">
+              יעד
+            </Button>
             <Button color="inherit" component={RouterLink} to="/calendar">
               לוח שנה
             </Button>

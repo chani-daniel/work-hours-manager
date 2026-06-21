@@ -6,6 +6,7 @@ import { ProtectedRoute } from './routes/ProtectedRoute'
 import { PublicOnlyRoute } from './routes/PublicOnlyRoute'
 import { AppLayout } from './features/layout/AppLayout'
 import { DashboardPage } from './features/dashboard/DashboardPage'
+import { TargetPage } from './features/target/TargetPage'
 import { CalendarPage } from './features/calendar/CalendarPage'
 
 function App() {
@@ -34,6 +35,7 @@ function App() {
         <Route element={<ProtectedRoute />}>
           <Route element={<AppLayout />}>
             <Route path="/" element={<DashboardPage />} />
+            <Route path="/target" element={<TargetPage />} />
             <Route path="/calendar" element={<CalendarPage />} />
           </Route>
         </Route>
