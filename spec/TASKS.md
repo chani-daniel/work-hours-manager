@@ -22,7 +22,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-003 | Supabase project: schema + RLS | — | Done |
 | TASK-004 | Supabase client + auth (email/password) | 001, 003 | Done |
 | TASK-005 | Auth guard + app routing/layout | 002, 004 | Done |
-| TASK-006a | Data hooks: months + settings | 003, 004 | Not started |
+| TASK-006a | Data hooks: months + settings | 003, 004 | Done |
 | TASK-006b | Data hooks: day_records | 003, 004 | Not started |
 | TASK-007 | Domain: `computeNetHours` | 001 | Not started |
 | TASK-008 | Domain: `countWorkingDays` + `computeSDH` | 001 | Not started |
