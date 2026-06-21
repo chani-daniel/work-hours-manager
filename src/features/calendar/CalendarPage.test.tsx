@@ -24,6 +24,8 @@ describe('CalendarPage', () => {
     // Hebrew toolbar label proves the localizer + messages are wired.
     expect(screen.getByRole('button', { name: 'היום' })).toBeInTheDocument()
     // Prompt shown until a day is selected.
-    expect(screen.getByText('בחרי יום בלוח כדי לערוך אותו.')).toBeInTheDocument()
+    expect(
+      screen.getByText('בחרי יום בלוח כדי לדווח עליו או לערוך אותו.'),
+    ).toBeInTheDocument()
   })
 })

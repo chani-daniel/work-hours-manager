@@ -6,6 +6,7 @@ import { he } from 'date-fns/locale'
 import { Box, Card, CardContent, Stack, Typography } from '@mui/material'
 import { useDayRecords } from '../../data/useDayRecords'
 import type { DayRecord } from '../../data/types'
+import { DayEditor } from './DayEditor'
 import 'react-big-calendar/lib/css/react-big-calendar.css'
 
 const localizer = dateFnsLocalizer({
@@ -44,6 +45,11 @@ function eventTitle(r: DayRecord): string {
 function parseLocalDate(dateStr: string): Date {
   const [y, m, d] = dateStr.split('-').map(Number)
   return new Date(y, m - 1, d)
+}
+
+function toDateStr(date: Date): string {
+  const pad = (n: number) => String(n).padStart(2, '0')
+  return `${date.getFullYear()}-${pad(date.getMonth() + 1)}-${pad(date.getDate())}`
 }
 
 export function CalendarPage() {
@@ -94,20 +100,21 @@ export function CalendarPage() {
 
       <Card elevation={1}>
         <CardContent>
-          {selected ? (
-            <Typography>
-              יום נבחר: {format(selected, 'EEEE, d בMMMM yyyy', { locale: he })}
-              <Typography component="span" sx={{ color: 'text.secondary' }}>
-                {' '}— עריכת היום תתווסף בקרוב.
-              </Typography>
-            </Typography>
-          ) : (
-            <Typography sx={{ color: 'text.secondary' }}>
-              בחרי יום בלוח כדי לערוך אותו.
-            </Typography>
-          )}
+          <Typography sx={{ color: 'text.secondary' }}>
+            בחרי יום בלוח כדי לדווח עליו או לערוך אותו.
+          </Typography>
         </CardContent>
       </Card>
+
+      {selected && (
+        <DayEditor
+          key={toDateStr(selected)}
+          open
+          date={toDateStr(selected)}
+          record={records.find((r) => r.date === toDateStr(selected))}
+          onClose={() => setSelected(null)}
+        />
+      )}
     </Stack>
   )
 }
