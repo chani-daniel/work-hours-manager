@@ -9,7 +9,7 @@
 
 Each task is small and independently verifiable, with the seven required sections: **Goal · Context · In · Out · Edge · DoD · Deps · Out of scope**. Scope is the MVP only; Phases 2–4 are not broken down here.
 
-**Status legend:** `Not started` · `In progress` · `Blocked` · `Done`. Keep the summary table updated each working day.
+**Status legend:** `Not started` · `In progress` · `Blocked` · `Done` · `Deferred` (intentionally postponed — revisit later). Keep the summary table updated each working day.
 
 ---
 
@@ -20,7 +20,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-001 | Project scaffold (Vite + React + TS + Vitest) | — | Done |
 | TASK-002 | MUI RTL theme (Hebrew text inline) | 001 | Done |
 | TASK-003 | Supabase project: schema + RLS | — | Done |
-| TASK-004 | Supabase client + authentication | 001, 003 | Not started |
+| TASK-004 | Supabase client + auth (email/password) | 001, 003 | Done |
 | TASK-005 | Auth guard + app routing/layout | 002, 004 | Not started |
 | TASK-006a | Data hooks: months + settings | 003, 004 | Not started |
 | TASK-006b | Data hooks: day_records | 003, 004 | Not started |
@@ -33,6 +33,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-012b | Day entry editor | 012a, 006b, 007 | Not started |
 | TASK-013 | Dashboard screen | 010, 011, 012b | Not started |
 | TASK-014 | Deploy to Netlify | 005 | Not started |
+| TASK-015 | Google sign-in (deferred enhancement) | 004 | Deferred |
 
 ---
 
@@ -66,15 +67,15 @@ Each task is small and independently verifiable, with the seven required section
 - **Deps:** —
 - **Out of scope:** App-side data access (TASK-006).
 
-## TASK-004 — Supabase client + authentication
-- **Goal:** Integrate the Supabase client and enable email/password + Google sign-in.
-- **Context:** SPEC §4.12, EC-15; PLAN §6.
+## TASK-004 — Supabase client + authentication (email/password)
+- **Goal:** Integrate the Supabase client and enable email/password authentication.
+- **Context:** SPEC §4.12, EC-15; PLAN §6. **Decision (2026-06-21):** Google sign-in deferred to a later enhancement (see "Deferred enhancements"); MVP ships with email/password only.
 - **In:** Supabase project from TASK-003.
-- **Out:** Sign-up (email/password), sign-in (email/password and "Continue with Google"), sign-out; current-session access.
-- **Edge:** Wrong credentials; unverified email; Google popup blocked; expired session.
-- **DoD:** A user can register, sign in with both methods, and sign out; session persists across reloads.
+- **Out:** Sign-up (email/password), sign-in (email/password), sign-out; current-session access that survives a page refresh.
+- **Edge:** Wrong credentials; unverified email; expired session.
+- **DoD:** A user can register, sign in with email/password, and sign out; session persists across reloads. (Verified live 2026-06-21.)
 - **Deps:** TASK-001, TASK-003.
-- **Out of scope:** Route protection (TASK-005); password reset.
+- **Out of scope:** Google sign-in (deferred); route protection (TASK-005); password reset.
 
 ## TASK-005 — Auth guard + app routing/layout
 - **Goal:** Add routing, an app layout, and protect authenticated routes.
@@ -195,6 +196,16 @@ Each task is small and independently verifiable, with the seven required section
 - **DoD:** The app loads from the Netlify URL, sign-in works, and data persists.
 - **Deps:** TASK-005.
 - **Out of scope:** Custom domain; PWA/desktop icon (Phase 4).
+
+## TASK-015 — Google sign-in (deferred enhancement)
+- **Goal:** Add "Continue with Google" alongside the existing email/password auth.
+- **Context:** SPEC §4.12, EC-15; PLAN §6. **Status:** Deferred (decided 2026-06-21) — revisit near the end of the project. The `signInWithGoogle` method already exists in `AuthProvider`; what remains is external OAuth setup + a UI button.
+- **In:** Existing auth (TASK-004); a Google Cloud OAuth client; Supabase Google provider enabled.
+- **Out:** A "Continue with Google" button on the auth screen that signs a user in via Google.
+- **Edge:** Google popup/redirect blocked; account already exists with the same email.
+- **DoD:** A user can sign in with Google and reach the signed-in app; session persists across reloads.
+- **Deps:** TASK-004.
+- **Out of scope:** Other social providers.
 
 ---
 
