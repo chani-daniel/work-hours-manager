@@ -11,8 +11,15 @@
     "test:watch": "vitest"
   },
   "dependencies": {
+    "@emotion/cache": "^11.14.0",
+    "@emotion/react": "^11.14.0",
+    "@emotion/styled": "^11.14.1",
+    "@fontsource/heebo": "^5.2.8",
+    "@mui/material": "^9.1.1",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "stylis": "^4.4.0",
+    "stylis-plugin-rtl": "^2.1.1"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^6.6.3",
@@ -21,6 +28,7 @@
     "@types/node": "^22.10.2",
     "@types/react": "^19.0.2",
     "@types/react-dom": "^19.0.2",
+    "@types/stylis": "^4.2.7",
     "@vitejs/plugin-react": "^4.3.4",
     "jsdom": "^25.0.1",
     "typescript": "^5.7.2",
