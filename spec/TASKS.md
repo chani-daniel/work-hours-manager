@@ -24,7 +24,7 @@ Each task is small and independently verifiable, with the seven required section
 | TASK-005 | Auth guard + app routing/layout | 002, 004 | Done |
 | TASK-006a | Data hooks: months + settings | 003, 004 | Done |
 | TASK-006b | Data hooks: day_records | 003, 004 | Done |
-| TASK-007 | Domain: `computeNetHours` | 001 | Not started |
+| TASK-007 | Domain: `computeNetHours` | 001 | Done |
 | TASK-008 | Domain: `countWorkingDays` + `computeSDH` | 001 | Not started |
 | TASK-009 | Domain: `computeAdjustedTarget` | 008 | Not started |
 | TASK-010 | Domain: `computeProgress` | 007, 009 | Not started |
